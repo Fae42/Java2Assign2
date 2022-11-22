@@ -2,6 +2,7 @@ package server;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class Game implements Runnable{
 	private Socket player1;
@@ -10,8 +11,8 @@ public class Game implements Runnable{
 	private static final int PLAY_1 = -1;
 	private static final int EMPTY = 0;
 	private int gameId;
-	private static boolean TURN = true;
-	private static final int[][] chessBoard = new int[3][3];
+	private boolean TURN = true;
+	private int[][] chessBoard = new int[3][3];
 	public Game(){
 		super();
 	}
@@ -90,7 +91,7 @@ public class Game implements Runnable{
 			while(true) {
 				if (TURN) {
 					message = br0.readLine();
-					System.out.println(message);
+					System.out.println(gameId + ":" +  message);
 					x = (int)message.charAt(0) - '0';
 					y = (int)message.charAt(2) - '0';
 					chessBoard[x][y] = PLAY_0;
@@ -98,7 +99,7 @@ public class Game implements Runnable{
 					pw1.flush();
 				} else {
 					message = br1.readLine();
-					System.out.println(message);
+					System.out.println(gameId + ":" +  message);
 					x = (int)message.charAt(0) - '0';
 					y = (int)message.charAt(2) - '0';
 					chessBoard[x][y] = PLAY_1;
@@ -119,7 +120,7 @@ public class Game implements Runnable{
 					}
 					pw0.flush();
 					pw1.flush();
-					return;
+					break;
 				} else {
 					if(TURN) {
 						pw1.println("go");
@@ -131,8 +132,42 @@ public class Game implements Runnable{
 				}
 				TURN = !TURN;
 			}
+		} catch (SocketException e) {
+			try{
+				player0.sendUrgentData(0xFF);
+			} catch (Exception ex){
+				try {
+					System.out.println("game "+gameId+" player0 exit");
+					OutputStream out = player1.getOutputStream();
+					PrintWriter pw = new PrintWriter(out);
+					pw.print("another client disconnected\n");
+					pw.flush();
+				} catch (Exception exc) {
+					exc.printStackTrace();
+				}
+			}
+			try{
+				player1.sendUrgentData(0xFF);
+			} catch (Exception ex){
+				try {
+					System.out.println("game "+gameId+" player1 exit");
+					OutputStream out = player0.getOutputStream();
+					PrintWriter pw = new PrintWriter(out);
+					pw.print("another client disconnected\n");
+					pw.flush();
+				} catch (Exception exc) {
+					exc.printStackTrace();
+				}
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				player1.close();
+				player0.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

@@ -37,12 +37,12 @@ public class Controller implements Initializable {
         game_panel.setOnMouseClicked(event -> {
             int x = (int) (event.getX() / BOUND);
             int y = (int) (event.getY() / BOUND);
-            System.out.println(permission);
+            //System.out.println(permission);
             if (chessBoard[x][y] == EMPTY && permission) {
                 client.setLocation(x, y);
                 refreshBoard(x, y);
                 permission = false;
-                System.out.println("set success");
+                //System.out.println("set success");
             }
         });
     }
