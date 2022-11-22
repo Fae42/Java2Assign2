@@ -1,5 +1,6 @@
-package application;
+package client;
 
+import client.controller.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,7 +18,10 @@ public class Main extends Application {
             primaryStage.setTitle("Tic Tac Toe");
             primaryStage.setScene(new Scene(root));
             primaryStage.setResizable(false);
+            primaryStage.setOnCloseRequest(event -> System.exit(0));
             primaryStage.show();
+            Controller controller = fxmlLoader.getController();
+            new Thread(controller.InitClient()).start();
         } catch (Exception e) {
             e.printStackTrace();
         }

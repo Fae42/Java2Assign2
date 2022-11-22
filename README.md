@@ -22,7 +22,7 @@ If you are using eclipse, you need to right-click Project>new>source folder, man
 
 ### Start the game
 
-The main function entry: `src/application/Main.java`.
+The main function entry: `src/server/Main.java`.
 
 ![image-20220930180502858](README.assets/image-20220930180502858.png)
 

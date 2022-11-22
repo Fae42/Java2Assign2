@@ -1,5 +1,6 @@
-package application.controller;
+package client.controller;
 
+import client.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
@@ -17,6 +18,8 @@ public class Controller implements Initializable {
     private static final int EMPTY = 0;
     private static final int BOUND = 90;
     private static final int OFFSET = 15;
+    private Client client;
+    private boolean permission = false;
 
     @FXML
     private Pane base_square;
@@ -34,19 +37,24 @@ public class Controller implements Initializable {
         game_panel.setOnMouseClicked(event -> {
             int x = (int) (event.getX() / BOUND);
             int y = (int) (event.getY() / BOUND);
-            if (refreshBoard(x, y)) {
-                TURN = !TURN;
+            System.out.println(permission);
+            if (chessBoard[x][y] == EMPTY && permission) {
+                client.setLocation(x, y);
+                refreshBoard(x, y);
+                permission = false;
+                System.out.println("set success");
             }
         });
     }
+    
+    public void setPermission() {
+        this.permission = true;
+    }
 
-    private boolean refreshBoard (int x, int y) {
-        if (chessBoard[x][y] == EMPTY) {
-            chessBoard[x][y] = TURN ? PLAY_1 : PLAY_2;
-            drawChess();
-            return true;
-        }
-        return false;
+    public void refreshBoard (int x, int y) {
+        chessBoard[x][y] = TURN ? PLAY_1 : PLAY_2;
+        TURN = !TURN;
+        drawChess();
     }
 
     private void drawChess () {
@@ -101,5 +109,11 @@ public class Controller implements Initializable {
         line_b.setEndY((j + 1) * BOUND + OFFSET * 0.5);
         line_b.setStroke(Color.BLUE);
         flag[i][j] = true;
+    }
+    
+    public Client InitClient() {
+        Client client = new Client(this);
+        this.client = client;
+        return client;
     }
 }
