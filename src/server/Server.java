@@ -15,7 +15,7 @@ public class Server implements Runnable{
 		ServerSocket server;
 		Socket socket;
 		Socket socketWaiting = null;
-		PrintWriter pw ;
+		PrintWriter pw;
 		int gameCount = 0;
 		try {
 			server = new ServerSocket(port);
@@ -23,7 +23,7 @@ public class Server implements Runnable{
 				socket = server.accept();
 				System.out.println(socket.getLocalAddress());
 				System.out.println(socket.getPort());
-				if(socketWaiting == null) {
+				if (socketWaiting == null) {
 					socketWaiting = socket;
 					pw = new PrintWriter(socketWaiting.getOutputStream());
 					pw.print("wait"+ "\r\n");
