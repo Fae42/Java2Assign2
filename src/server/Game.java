@@ -29,8 +29,8 @@ public class Game implements Runnable{
 		int[] col = new int[3];
 		int pie = chessBoard[0][0] + chessBoard[1][1] + chessBoard[2][2];
 		int na = chessBoard[0][2] + chessBoard[1][1] + chessBoard[2][0];
-		for(int i=0;i<3;i++) {
-			for(int j=0;j<3;j++) {
+		for (int i=0 ; i<3 ; i++) {
+			for (int j=0 ; j<3 ; j++) {
 				row[i] += chessBoard[i][j];
 				col[j] += chessBoard[i][j];
 				if(chessBoard[i][j] == EMPTY) {

@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 
-public class Client implements Runnable{
+public class Client implements Runnable {
 	private Controller controller;
 	private int x;
 	private int y;
