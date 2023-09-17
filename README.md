@@ -48,11 +48,11 @@ This is a demo view for the assignment. However, the basic functions are not com
 
 ## TODO
 
-- [ ] Server (35pt.)
-- [ ] Client/Player (35pt.)
+- [x] Server (35pt.)
+- [x] Client/Player (35pt.)
 - [x] GUI (15pt.)
-- [ ] Exception Handling (15pt.)
-- [ ] Bonus (15pt.)
+- [x] Exception Handling (15pt.)
+- [x] Bonus (15pt.)
 
 ## Hint
 
